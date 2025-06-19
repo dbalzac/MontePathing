@@ -8,16 +8,15 @@ grid = [[0]*10 for _ in range(10)]
 start_y = 0
 start_x = 9
 
-# Pick obstacle top-left corner so 3x3 fits inside grid
 obs_start_y = random.randint(1, 6)
 obs_start_x = random.randint(1, 6)
 
-# Place 3x3 obstacle block
+# Place obstacle 
 for y in range(obs_start_y, obs_start_y + 3):
     for x in range(obs_start_x, obs_start_x + 3):
         grid[y][x] = 3
 
-# Place goal inside the obstacle block to guarantee it is blocked
+# Place goal inside the obstacle 
 goal_y = random.randint(obs_start_y, obs_start_y + 2)
 goal_x = random.randint(obs_start_x, obs_start_x + 2)
 
@@ -46,10 +45,8 @@ def monte_carlo_path_with_bias(grid, start, goal, max_steps=200, trials=5000):
                         neighbors.append((ny, nx))
             
             if not neighbors:
-                # no moves possible, dead end
                 break
             
-            # Calculate distance to goal for each neighbor
             neighbors.sort(key=lambda pos: distance(pos, goal))
             
             # Pick one of the closest neighbors (top 2 closest), add randomness
@@ -77,7 +74,7 @@ norm = mcolors.BoundaryNorm(bounds, cmap.N)
 if path:
     for y, x in path:
         if grid[y][x] == 0:
-            grid[y][x] = 4  # mark path in yellow
+            grid[y][x] = 4 
 
 plt.imshow(grid, cmap=cmap, norm=norm)
 plt.grid(False)
